@@ -40,6 +40,15 @@ UserSchema.methods.authJSON = function() {
   }
 }
 
+UserSchema.methods.publicJSON = function() {
+  return {
+    username: this.username,
+    location: this.location,
+    tagline: this.tagline,
+    createdAt: this.createdAt
+  }
+}
+
 // User model = constructor for creating and reading documents in MongoDB db
 const User = mongoose.model('User', UserSchema);
 

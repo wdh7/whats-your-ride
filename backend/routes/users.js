@@ -1,5 +1,22 @@
 const router = require('express').Router();
 const User = require('../models/User');
+const auth = require('../middleware/auth');
+
+// When user param is present in the path, attach user object
+// to request if user is found in db. Then move to next middleware.
+router.param('username', (req, res, next, username) => {
+  User.findOne({ username })
+    .then(user => {
+      if (!user) {
+        return res.status(404).json({ message: 'User not found' })
+      }
+
+      // set the user on the req object
+      req.user = user;
+      next();
+    })
+    .catch(err => next)
+})
 
 // REGISTER A NEW USER
 router.post('/', (req, res, next) => {
@@ -23,16 +40,36 @@ router.post('/', (req, res, next) => {
   });
 })
 
+// GET PUBLIC USER PROFILE
+router.get('/:username', (req, res, next) => {
+  res.status(200).json({ user: req.user.publicJSON() })
+})
 
+// UPDATE USER PROFILE
+router.put('/:username', auth.verify, (req, res, next) => {
+  const { username, password, location, tagline } = req.body.user;
 
+  // only update user profile field if the client inputted updated info
+  if (username !== undefined) {
+    req.user.username = username;
+  }
 
-// GET USER
+  if (password !== undefined) {
+    req.user.setHash(password);
+  }
 
+  if (location !== undefined) {
+    req.user.location = location;
+  }
 
+  if (tagline !== undefined) {
+    req.user.tagline = tagline;
+  }
 
-
-// UPDATE USER
-
+  req.user.save()
+    .then(user => res.status(200).json({ user: user.authJSON() }))
+    .catch(err => next)
+})
 
 
 
