@@ -45,8 +45,8 @@ router.get('/:username', (req, res, next) => {
   res.status(200).json({ user: req.user.publicJSON() })
 })
 
-// UPDATE USER PROFILE
-router.put('/:username', auth.verify, (req, res, next) => {
+// UPDATE USER PROFILE (protected route: need valid JWT to update profile)
+router.put('/:username', auth.verify , (req, res, next) => {
   const { username, password, location, tagline } = req.body.user;
 
   // only update user profile field if the client inputted updated info

@@ -1,11 +1,13 @@
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const logger = require('morgan');
 const mongoose = require('mongoose');
 require('dotenv').config();
 require('./config/passport');
 const authRoutes = require('./routes/auth');
 const usersRoutes = require('./routes/users');
+const carsRoutes = require('./routes/cars');
 
 const app = express();
 
@@ -20,9 +22,11 @@ mongoose.connection
 
 app.use(cors());
 app.use(bodyParser.json());
+app.use(logger('tiny'));
 
 app.use('/api', authRoutes);
 app.use('/api/users', usersRoutes);
+app.use('/api/cars', carsRoutes);
 
 // Validation Error handling middleware
 app.use((err, req, res, next) => {
