@@ -22,6 +22,33 @@ CarSchema.methods.detailsJSON = function() {
   }
 }
 
+// Car method to only update and save fields that have changed
+CarSchema.methods.updateAndSave = function(make, model, year, description) {
+  if (make !== undefined) {
+    this.make = make;
+  }
+
+  if (model !== undefined) {
+    this.model = model;
+  }
+
+  if (year !== undefined) {
+    this.year = year;
+  }
+
+  if (description !== undefined) {
+    this.description = description;
+  }
+
+  return this.save().then(car => {
+    return car.populate('owner', (err, populatedCar) => {
+      if (err) { return res.sendStatus(500) }
+
+      return populatedCar;
+    })
+  });
+}
+
 const Car = mongoose.model('Car', CarSchema);
 
 module.exports = Car;

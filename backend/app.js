@@ -24,6 +24,7 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(logger('tiny'));
 
+// Routes
 app.use('/api', authRoutes);
 app.use('/api/users', usersRoutes);
 app.use('/api/cars', carsRoutes);
