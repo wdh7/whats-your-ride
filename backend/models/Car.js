@@ -1,13 +1,15 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const User = require('./User');
+const Comment = require('./Comment');
 
 const CarSchema = new Schema({
   make: { type: String, required: true },
   model: { type: String, required: true },
   year: { type: Number, required: true },
   description: { type: String, required: true },
-  owner: { type: Schema.Types.ObjectId, ref: 'User', required: true }
+  owner: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+  comments: [{ type: Schema.Types.ObjectId, ref: 'Comment' }]
 }, { timestamps: true })
 
 CarSchema.methods.detailsJSON = function() {

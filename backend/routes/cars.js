@@ -1,7 +1,9 @@
 const router = require('express').Router();
 const Car = require('../models/Car');
 const User = require('../models/User');
+const Comment = require('../models/Comment');
 const auth = require('../middleware/auth');
+
 
 // If route contains "id" params, then attach
 // car to the req object
@@ -47,6 +49,7 @@ router.post('/', auth.verify, (req, res, next) => {
     description,
     owner: req.auth.id
   })
+
 
   // Save the car to the db
   car.save()
@@ -111,5 +114,43 @@ router.delete('/:id', auth.verify, (req, res, next) => {
     })
 })
 
+// CREATE COMMENTS FOR A CAR (auth required)
+router.post('/:id/comments', auth.verify, (req, res, next) => {
+  const { text } = req.body.comment;
+
+  // create new comment
+  const comment = new Comment({
+    text,
+    author: req.auth.id,
+    car: req.car._id
+  })
+
+  // save comment
+  comment.save()
+    .then(comment => {
+      // Add comment id to Car model and save
+      req.car.comments.push(comment._id);
+      req.car.save().then(() => {
+        // success
+        res.status(200).json({ message: 'Successfully created a comment' })
+      })
+    })
+    .catch(err => res.status(500).json({ message: 'Error saving comment' })) // error
+})
+
+// GET ALL COMMENTS FOR A CAR
+router.get('/:id/comments', (req, res, next) => {
+  // search db to find all comments for car
+  Comment
+    .find({ car: req.car._id })
+    .populate('author')
+    .exec((err, populatedComments) => {
+      // remove unnecessary properties from author field
+      const editedComments = populatedComments.map(comment => comment.editedJSON());
+      
+      res.status(200).json({ comments: editedComments })
+    })
+    .catch(err => res.status(500).json({ message: 'Error saving comment' })) // error
+})
 
 module.exports = router;
