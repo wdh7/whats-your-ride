@@ -12,6 +12,7 @@ const CarSchema = new Schema({
 
 CarSchema.methods.detailsJSON = function() {
   return {
+    _id: this._id,
     make: this.make,
     model: this.model,
     year: this.year,
