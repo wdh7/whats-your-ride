@@ -1,0 +1,35 @@
+a {
+  color: #000000c4;
+}
+
+a:hover {
+  text-decoration: none;
+  color: inherit;
+}
+
+.fa {
+  margin-right: 12px;
+  font-weight: bold;
+  font-size: 1.3rem;
+  color: #2196F3;
+}
+
+.active {
+  font-weight: bold;
+}
+
+#logo {
+  font-weight: bold;
+  letter-spacing: 2px;
+  color: #000000c4;
+}
+
+.navbar {
+  width: 100%;
+  border-bottom: 2px solid #00000059;
+}
+
+.nav li {
+  display: flex;
+  margin: 0 5px;
+}
