@@ -17,7 +17,8 @@ const UserSchema = new Schema({
     required: true
   },
   location: { type: String, required: true },
-  tagline: String
+  tagline: String,
+  img: { type: String, required: true }
 }, { timestamps: true })
 
 UserSchema.plugin(uniqueValidator);
@@ -35,6 +36,7 @@ UserSchema.methods.authJSON = function() {
     username: this.username,
     location: this.location,
     tagline: this.tagline,
+    img: this.img,
     createdAt: this.createdAt,
     jwt: generateToken(this)
   }
@@ -45,6 +47,7 @@ UserSchema.methods.publicJSON = function() {
     username: this.username,
     location: this.location,
     tagline: this.tagline,
+    img: this.img,
     createdAt: this.createdAt
   }
 }

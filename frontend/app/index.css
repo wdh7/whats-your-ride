@@ -18,6 +18,10 @@ a:hover {
   font-weight: bold;
 }
 
+.main-wrapper {
+  width: 100%;
+}
+
 #logo {
   font-weight: bold;
   letter-spacing: 2px;

@@ -8,6 +8,7 @@ const CarSchema = new Schema({
   model: { type: String, required: true },
   year: { type: Number, required: true },
   description: { type: String, required: true },
+  img: { type: String, required: true },
   owner: { type: Schema.Types.ObjectId, ref: 'User', required: true },
   comments: [{ type: Schema.Types.ObjectId, ref: 'Comment' }]
 }, { timestamps: true })
@@ -19,13 +20,14 @@ CarSchema.methods.detailsJSON = function() {
     model: this.model,
     year: this.year,
     description: this.description,
+    img: this.img,
     updatedAt: this.updatedAt,
     owner: this.owner.publicJSON()
   }
 }
 
 // Car method to only update and save fields that have changed
-CarSchema.methods.updateAndSave = function(make, model, year, description) {
+CarSchema.methods.updateAndSave = function(make, model, year, description, img) {
   if (make !== undefined) {
     this.make = make;
   }
@@ -40,6 +42,10 @@ CarSchema.methods.updateAndSave = function(make, model, year, description) {
 
   if (description !== undefined) {
     this.description = description;
+  }
+
+  if (img !== undefined) {
+    this.img = img;
   }
 
   return this.save().then(car => {

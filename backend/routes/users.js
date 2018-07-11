@@ -20,12 +20,13 @@ router.param('username', (req, res, next, username) => {
 
 // REGISTER A NEW USER
 router.post('/', (req, res, next) => {
-  const { username, password, location, tagline } = req.body.user;
+  const { username, password, location, tagline, img } = req.body.user;
 
   const user = new User({
     username,
     location,
-    tagline
+    tagline,
+    img: img || 'http://www.placepuppy.net/1p/400/250' // use placeholder image if no profile img provided
   });
 
   // convert plain text password to hash
@@ -47,7 +48,7 @@ router.get('/:username', (req, res, next) => {
 
 // UPDATE USER PROFILE (protected route: need valid JWT to update profile)
 router.put('/:username', auth.verify , (req, res, next) => {
-  const { username, password, location, tagline } = req.body.user;
+  const { username, password, location, tagline, img } = req.body.user;
 
   // only update user profile field if the client inputted updated info
   if (username !== undefined) {
@@ -64,6 +65,10 @@ router.put('/:username', auth.verify , (req, res, next) => {
 
   if (tagline !== undefined) {
     req.user.tagline = tagline;
+  }
+
+  if (img !== undefined) {
+    req.user.img = img;
   }
 
   req.user.save()

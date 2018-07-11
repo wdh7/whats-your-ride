@@ -39,7 +39,7 @@ router.get('/', (req, res, next) => {
 // CREATE A CAR (auth required)
 router.post('/', auth.verify, (req, res, next) => {
   // Get car form data sent from client submitted form
-  const { make, model, year, description } = req.body.car;
+  const { make, model, year, description, img } = req.body.car;
 
   // create the new car
   const car = new Car({
@@ -47,6 +47,7 @@ router.post('/', auth.verify, (req, res, next) => {
     model,
     year,
     description,
+    img: img || 'https://loremflickr.com/320/240/car', // use car img placeholder if no car img provided
     owner: req.auth.id
   })
 
@@ -74,7 +75,7 @@ router.get('/:id', (req, res, next) => {
 
 // EDIT A CAR (auth required)
 router.put('/:id', auth.verify, (req, res, next) => {
-  const { make, model, year, description } = req.body.car;
+  const { make, model, year, description, img } = req.body.car;
 
   User.findById(req.auth.id)
     .then(user => {
@@ -84,7 +85,7 @@ router.put('/:id', auth.verify, (req, res, next) => {
       // Check if auth user === car owner
       if (user.username === req.car.owner.username) {
         // continue with editting car
-        req.car.updateAndSave(make, model, year, description)
+        req.car.updateAndSave(make, model, year, description, img)
           .then(updatedCar => res.status(200).json({ car: updatedCar.detailsJSON() }))
       } else {
         // Auth user is not the same as car owner
@@ -147,7 +148,7 @@ router.get('/:id/comments', (req, res, next) => {
     .exec((err, populatedComments) => {
       // remove unnecessary properties from author field
       const editedComments = populatedComments.map(comment => comment.editedJSON());
-      
+
       res.status(200).json({ comments: editedComments })
     })
     .catch(err => res.status(500).json({ message: 'Error saving comment' })) // error
