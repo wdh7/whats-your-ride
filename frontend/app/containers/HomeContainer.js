@@ -1,6 +1,13 @@
 import React, { Component } from 'react';
+import { getCars } from '../actions/cars';
+import { connect } from 'react-redux';
+
 
 class HomeContainer extends Component {
+  componentDidMount() {
+    this.props.getInitialCars();
+  }
+
   render() {
     return (
       <div>
@@ -10,5 +17,14 @@ class HomeContainer extends Component {
   }
 }
 
+function mapDispatchToProps(dispatch) {
+  return {
+    getInitialCars: () => {
+      //dispatch redux thunk action creator
+      dispatch(getCars());
+    }
+  }
+}
 
-export default HomeContainer;
+
+export default connect(null, mapDispatchToProps)(HomeContainer);
