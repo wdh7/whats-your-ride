@@ -31,9 +31,37 @@ a:hover {
 .navbar {
   width: 100%;
   border-bottom: 2px solid #00000059;
+  margin-bottom: 30px;
 }
 
 .nav li {
   display: flex;
   margin: 0 5px;
+}
+
+.cars-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  padding-left: 0;
+}
+
+.card {
+  width: 230px;
+  border: 1px solid #00000061;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+img {
+  width: 100%;
+}
+
+.card-bottom {
+  padding: 5px;
+}
+
+.content {
+  width: 90%;
+  margin: auto;
 }

@@ -34,11 +34,17 @@ export function getCars() {
 
     // make the GET request to get cars from the db
     fetch('/api/cars')
-      .then(response => response.json())
+      .then(res => {
+        if (!res.ok) {
+          throw new Error(`${res.status} - ${res.statusText}`)
+        }
+
+        return res.json();
+      })
       .then(({ cars }) => {
         // if successful, update state with received cars
         dispatch(getCarsSuccess(cars));
       })
-      .catch(error => dispatch(getCarsError(error))) // update state with error
+      .catch(error => dispatch(getCarsError(error.message))) // update state with error
   }
 }

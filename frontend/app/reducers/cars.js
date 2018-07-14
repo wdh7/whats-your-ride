@@ -12,7 +12,7 @@ function carsReducer(state = initialState, action) {
     case FETCH_CARS_REQUEST:
       return {
         ...state,
-        isFetching: true,
+        isFetching: true
       }
     case FETCH_CARS_SUCCESS:
       return {
