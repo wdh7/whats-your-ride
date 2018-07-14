@@ -5,6 +5,7 @@ import Register from './Register'
 import Login from './Login';
 import NavBar from './NavBar';
 import HomeContainer from '../containers/HomeContainer';
+import CarContainer from '../containers/CarContainer';
 
 
 class App extends Component {
@@ -18,6 +19,7 @@ class App extends Component {
             <Route exact path='/' component={HomeContainer} />
             <Route path='/register' component={Register} />
             <Route path='/login' component={Login} />
+            <Route path='/cars/:id' component={CarContainer} />
             <Route render={() => <h1>Not Found</h1>} />
           </Switch>
         </div>
