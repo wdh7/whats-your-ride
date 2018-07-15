@@ -38,7 +38,6 @@ export function getCar(id) {
           // bad response
           throw new Error(`${res.status} - ${res.statusText}`);
         }
-
         return res.json();
       })
       .then(({ car }) => dispatch(getCarSuccess(car))) // update state with returned car

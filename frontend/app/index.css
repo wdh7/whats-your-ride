@@ -65,3 +65,49 @@ img {
   width: 90%;
   margin: auto;
 }
+
+.car-details {
+  width: 90%;
+  box-sizing: border-box;
+  padding: 15px;
+  margin: auto;
+  display: flex;
+  border-bottom: 2px solid #00000059;
+}
+
+.car-img {
+  width: 40%;
+  margin-right: 30px;
+}
+
+.car-info {
+  width: 50%;
+}
+
+.car-info span {
+  display: block;
+}
+
+.owner-section {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 5px;
+  margin-top: 15px;
+}
+
+.owner-stamp {
+  display: flex;
+  align-items: center;
+}
+
+.owner-img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+
+.last-updated {
+  color: #0000004f;
+  font-size: 0.6rem;
+}

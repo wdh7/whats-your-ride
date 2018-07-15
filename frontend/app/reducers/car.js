@@ -4,7 +4,7 @@ import { GET_CAR_START, GET_CAR_SUCCESS, GET_CAR_ERROR } from '../actions/car';
 const initialState = {
   isLoading: false,
   error: null,
-  car: null
+  car: {}
 }
 
 function carReducer(state = initialState, action) {
@@ -16,11 +16,13 @@ function carReducer(state = initialState, action) {
       }
     case GET_CAR_SUCCESS:
       return {
+        ...state,
         isLoading: false,
         car: action.car
       }
     case GET_CAR_ERROR:
       return {
+        ...state,
         isLoading: false,
         error: action.error
       }
