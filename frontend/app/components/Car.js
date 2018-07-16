@@ -10,10 +10,10 @@ function Car({ car }) {
       </div>
 
       <div className='car-info'>
-        <span>Make: {car.make}</span>
-        <span>Model: {car.model}</span>
-        <span>Year: {car.year}</span>
-        <span>Description: {car.description}</span>
+        <span><b>Make:</b> {car.make}</span>
+        <span><b>Model:</b> {car.model}</span>
+        <span><b>Year:</b> {car.year}</span>
+        <span><b>Description:</b> {car.description}</span>
         <span className='last-updated'>Last Updated: {new Date(car.updatedAt).toDateString()}</span>
 
         <User user={car.owner} />

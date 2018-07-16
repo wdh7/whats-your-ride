@@ -1,46 +1,46 @@
+import { getCar, getComments } from '../helpers/car';
+
 // ACTION TYPE CONSTANTS
-export const GET_CAR_START = 'GET_CAR_START';
-export const GET_CAR_SUCCESS = 'GET_CAR_SUCCESS';
-export const GET_CAR_ERROR = 'GET_CAR_ERROR';
+export const GET_CAR_AND_COMMENTS_START = 'GET_CAR_AND_COMMENTS_START';
+export const GET_CAR_AND_COMMENTS_SUCCESS = 'GET_CAR_AND_COMMENTS_SUCCESS';
+export const GET_CAR_AND_COMMENTS_ERROR = 'GET_CAR_AND_COMMENTS_ERROR';
 
 
 // ACTIONS CREATORS
-function getCarStart() {
+function getCarInfoStart() {
   return {
-    type: GET_CAR_START
+    type: GET_CAR_AND_COMMENTS_START
   }
 }
 
-function getCarSuccess(car) {
+function getCarInfoSuccess(car, comments) {
   return {
-    type: GET_CAR_SUCCESS,
-    car
+    type: GET_CAR_AND_COMMENTS_SUCCESS,
+    car,
+    comments
   }
 }
 
-function getCarError(error) {
+function getCarInfoError(error) {
   return {
-    type: GET_CAR_ERROR,
+    type: GET_CAR_AND_COMMENTS_ERROR,
     error
   }
 }
 
 
 // REDUX THUNK ACTION CREATOR
-export function getCar(id) {
+export function getCarInfo(id) {
   return (dispatch) => {
-    dispatch(getCarStart());
+    dispatch(getCarInfoStart());
 
-    // make the GET request for the car
-    fetch(`/api/cars/${id}`)
-      .then(res => {
-        if (!res.ok) {
-          // bad response
-          throw new Error(`${res.status} - ${res.statusText}`);
-        }
-        return res.json();
-      })
-      .then(({ car }) => dispatch(getCarSuccess(car))) // update state with returned car
-      .catch(error => dispatch(getCarError(error.message))) // update state with error
+    // make the GET request for the car and comments
+    Promise.all([
+      getCar(id),
+      getComments(id)
+    ]).then(([ cars, comments ]) => {
+      dispatch(getCarInfoSuccess(cars, comments.comments));
+    })
+    .catch(error => dispatch(getCarInfoError(error.message)))
   }
 }

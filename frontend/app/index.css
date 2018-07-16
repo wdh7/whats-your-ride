@@ -7,6 +7,10 @@ a:hover {
   color: inherit;
 }
 
+ul {
+  padding-left: 0;
+}
+
 .fa {
   margin-right: 12px;
   font-weight: bold;
@@ -95,12 +99,12 @@ img {
   margin-top: 15px;
 }
 
-.owner-stamp {
+.owner-stamp, .comment-author {
   display: flex;
   align-items: center;
 }
 
-.owner-img {
+.owner-img, .comment-img-wrapper {
   width: 50px;
   height: 50px;
   border-radius: 50%;
@@ -110,4 +114,23 @@ img {
 .last-updated {
   color: #0000004f;
   font-size: 0.6rem;
+}
+
+.comment-wrapper {
+  width: 90%;
+  margin: auto;
+  box-sizing: border-box;
+  padding: 5px;
+  border-bottom: 2px solid #0000001f;
+}
+
+.comment-text {
+  padding-left: 55px;
+}
+
+.comments-counter {
+  width: 90%;
+  margin: auto;
+  box-sizing: border-box;
+  padding: 5px;
 }

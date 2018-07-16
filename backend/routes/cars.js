@@ -151,7 +151,6 @@ router.get('/:id/comments', (req, res, next) => {
 
       res.status(200).json({ comments: editedComments })
     })
-    .catch(err => res.status(500).json({ message: 'Error saving comment' })) // error
 })
 
 module.exports = router;

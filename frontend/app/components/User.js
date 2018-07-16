@@ -11,10 +11,10 @@ function User({ user }) {
 
   return (
     <div className='owner-section'>
-      <span>Owner: </span>
+      <span><b>Owner: </b></span>
       <div className='owner-stamp'>
         <div className='owner-img' style={imgStyles}></div>
-        <span>{user.username} from {user.location}</span>
+        <span><i>{user.username}</i> from {user.location}</span>
       </div>
     </div>
   )
