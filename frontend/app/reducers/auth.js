@@ -30,7 +30,8 @@ function authReducer(state = initialState, action) {
       return {
         ...state,
         fetchInProgress: false,
-        regSuccessMsg: action.message
+        regSuccessMsg: action.message,
+        regErrorMsg: ''
       }
     case REGISTER_ERROR:
       return {

@@ -65,10 +65,10 @@ export function register(data) {
     return fetch('/api/users', options)
       .then(res => {
         if (!res.ok) {
-          throw new Error('Error with registration');
+          throw new Error('Error with registration. Please try again');
         }
 
-        return res.json()
+        return res.json();
       })
       .then(({ message }) => {
         dispatch(registerSuccess(message));

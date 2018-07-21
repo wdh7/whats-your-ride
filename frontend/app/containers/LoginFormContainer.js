@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import LoginForm from '../components/LoginForm';
 import { login } from '../actions/auth';
+import LoginForm from '../components/LoginForm';
+import ShowAlert from '../components/ShowAlert';
+import { resetForm } from '../helpers/resetForm';
 
 class LoginFormContainer extends Component {
   constructor(props) {
@@ -24,18 +26,36 @@ class LoginFormContainer extends Component {
   // Redirect to homepage if successfully logged in.
   handleSubmit = (e) => {
     e.preventDefault();
+    e.target.reset();
 
     this.props.submitLogin(this.state)
       .then(res => {
         if (res.redirect) {
+          // Successfully logged in. Redirect to homepage.
           this.props.history.push('/');
+        } else {
+          // Error with log in. Reset component state.
+          resetForm.call(this, this.state);
         }
       })
   }
 
   render() {
+    const { regSuccessMsg, authedErrorMsg } = this.props.auth;
+
     return (
       <div className='login-wrapper'>
+
+        {regSuccessMsg
+          ? <ShowAlert color='success' text={`${regSuccessMsg}. Proceed with login`} />
+          : null
+        }
+
+        {authedErrorMsg
+          ? <ShowAlert color='danger' text={authedErrorMsg} />
+          : null
+        }
+
         <h3>Login Form</h3>
         <LoginForm handleInput={this.handleInput} handleSubmit={this.handleSubmit} />
       </div>
