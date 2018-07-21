@@ -134,3 +134,10 @@ img {
   box-sizing: border-box;
   padding: 5px;
 }
+
+.register-wrapper {
+  width: 60%;
+  box-sizing: border-box;
+  padding-top: 30px;
+  margin: auto;
+}

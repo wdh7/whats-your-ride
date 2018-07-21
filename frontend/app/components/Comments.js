@@ -6,7 +6,7 @@ function Comments({ comments }) {
   return (
     <div>
       <ul>
-        {comments.map(comment => <Comment comment={comment} />)}
+        {comments.map(comment => <Comment comment={comment} key={comment.id} />)}
       </ul>
     </div>
   )

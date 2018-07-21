@@ -12,6 +12,7 @@ const CommentSchema = new Schema({
 // method to remove properties from author object
 CommentSchema.methods.editedJSON = function() {
   return {
+    id: this._id,
     text: this.text,
     article: this.article,
     author: this.author.publicJSON()
