@@ -31,7 +31,9 @@ class LoginFormContainer extends Component {
     this.props.submitLogin(this.state)
       .then(res => {
         if (res.redirect) {
-          // Successfully logged in. Redirect to homepage.
+          // Successfully logged in. Redirect to homepage
+          // and set jwt in local storage
+          localStorage.setItem('jwt', this.props.auth.authedUser.jwt);
           this.props.history.push('/');
         } else {
           // Error with log in. Reset component state.
