@@ -22,6 +22,10 @@ ul {
   font-weight: bold;
 }
 
+.remove-left-padding {
+  padding-left: 0;
+}
+
 .main-wrapper {
   width: 100%;
 }
@@ -135,7 +139,7 @@ img {
   padding: 5px;
 }
 
-.register-wrapper {
+.register-wrapper, .login-wrapper {
   width: 60%;
   box-sizing: border-box;
   padding-top: 30px;

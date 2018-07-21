@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Home from './Home';
 import Register from './Register';
-import Login from './Login';
 import NavBar from './NavBar';
 import HomeContainer from '../containers/HomeContainer';
 import CarContainer from '../containers/CarContainer';

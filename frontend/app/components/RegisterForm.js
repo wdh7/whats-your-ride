@@ -7,7 +7,7 @@ function RegisterForm({ handleChange, handleSubmit }) {
     <Form onSubmit={handleSubmit}>
       <FormGroup>
         <Label for="username">Username</Label>
-        <Input type="text" name="username" id="username" onChange={handleChange} />
+        <Input type="text" name="username" id="username" onChange={handleChange} placeholder='username must be min 3 characters' />
       </FormGroup>
       <FormGroup>
         <Label for="password">Password</Label>
@@ -25,7 +25,7 @@ function RegisterForm({ handleChange, handleSubmit }) {
         <Label for="img">Image Link</Label>
         <Input type="text" name="img" id="img" placeholder='enter your image link' onChange={handleChange} />
       </FormGroup>
-      <Button color='primary'>Submit</Button>
+      <Button color='primary'>Register</Button>
     </Form>
   )
 }

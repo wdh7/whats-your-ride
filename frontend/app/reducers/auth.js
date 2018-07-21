@@ -1,30 +1,54 @@
-import { REGISTER_START, REGISTER_SUCCESS, REGISTER_ERROR } from '../actions/auth';
+import {
+  REGISTER_START,
+  REGISTER_SUCCESS,
+  REGISTER_ERROR,
+  LOGIN_START,
+  LOGIN_SUCCESS,
+  LOGIN_ERROR,
+} from '../actions/auth';
 
 
 const initialState = {
-  regInProgress: false,
+  fetchInProgress: false,
   regSuccessMsg: '',
-  regErrorMsg: ''
+  regErrorMsg: '',
+  authedUser: {},
+  authedErrorMsg: ''
 }
 
 function authReducer(state = initialState, action) {
   switch (action.type) {
     case REGISTER_START:
+    case LOGIN_START:
       return {
         ...state,
-        regInProgress: true
+        fetchInProgress: true,
+        regErrorMsg: '',
+        authedErrorMsg: ''
       }
     case REGISTER_SUCCESS:
       return {
         ...state,
-        regInProgress: false,
+        fetchInProgress: false,
         regSuccessMsg: action.message
       }
     case REGISTER_ERROR:
       return {
         ...state,
-        regInProgress: false,
+        fetchInProgress: false,
         regErrorMsg: action.error
+      }
+    case LOGIN_SUCCESS:
+      return {
+        ...state,
+        fetchInProgress: false,
+        authedUser: action.user
+      }
+    case LOGIN_ERROR:
+      return {
+        ...state,
+        fetchInProgress: false,
+        authedErrorMsg: action.error
       }
     default:
       return state;
