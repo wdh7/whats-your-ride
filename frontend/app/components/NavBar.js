@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
+import PublicNavBar from './PublicNavBar';
+import AuthedNavBar from './AuthedNavBar';
 
 function NavBar() {
+  const jwt = localStorage.getItem('jwt');
+
   return (
     <nav className='navbar'>
       <div className='container'>
@@ -14,12 +18,8 @@ function NavBar() {
           <li>
             <NavLink to='/' exact activeClassName='active'>Home</NavLink>
           </li>
-          <li>
-            <NavLink to='/register' activeClassName='active'>Register</NavLink>
-          </li>
-          <li>
-            <NavLink to='/login' activeClassName='active'>Login</NavLink>
-          </li>
+
+          { jwt ? <AuthedNavBar /> : <PublicNavBar /> }
         </ul>
       </div>
     </nav>
