@@ -6,6 +6,8 @@ export const LOGIN_START = 'LOGIN_START';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
 export const LOGIN_ERROR = 'LOGIN_ERROR';
 
+export const LOGOUT = 'LOGOUT';
+
 
 function registerStart() {
   return {
@@ -44,6 +46,12 @@ function loginError(error) {
   return {
     type: LOGIN_ERROR,
     error
+  }
+}
+
+export function logOutUser() {
+  return {
+    type: LOGOUT
   }
 }
 

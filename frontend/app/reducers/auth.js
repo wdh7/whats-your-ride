@@ -5,6 +5,7 @@ import {
   LOGIN_START,
   LOGIN_SUCCESS,
   LOGIN_ERROR,
+  LOGOUT
 } from '../actions/auth';
 
 
@@ -50,6 +51,12 @@ function authReducer(state = initialState, action) {
         ...state,
         fetchInProgress: false,
         authedErrorMsg: action.error
+      }
+    case LOGOUT:
+      localStorage.removeItem('jwt');
+      return {
+        ...state,
+        authedUser: {}
       }
     default:
       return state;

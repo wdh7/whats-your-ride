@@ -1,18 +1,22 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { NavLink, Link } from 'react-router-dom';
 
-function AuthedNavBar() {
+function AuthedNavBar({ logOut }) {
   return (
     <div className='nav'>
       <li>
         <NavLink to='/profile' activeClassName='active'>Profile</NavLink>
       </li>
-      <li>
-        <NavLink to='/logout' activeClassName='active'>Logout</NavLink>
+      <li onClick={logOut}>
+        <Link to='/'>Logout</Link>
       </li>
     </div>
   )
 }
 
+AuthedNavBar.propTypes = {
+  logOut: PropTypes.func.isRequired
+}
 
 export default AuthedNavBar;
