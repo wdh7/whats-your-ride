@@ -6,7 +6,15 @@ function Comments({ comments }) {
   return (
     <div>
       <ul>
-        {comments.map(comment => <Comment comment={comment} key={comment.id} />)}
+        {comments.map(comment => {
+          return (
+            <Comment
+              comment={comment}
+              key={comment.id}
+              popoverId={comment.id}
+            />
+          )
+        })}
       </ul>
     </div>
   )

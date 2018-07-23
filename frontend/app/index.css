@@ -115,6 +115,10 @@ img {
   margin-right: 5px;
 }
 
+.owner-img:hover, .comment-img-wrapper:hover {
+  cursor: pointer;
+}
+
 .last-updated {
   color: #0000004f;
   font-size: 0.6rem;
