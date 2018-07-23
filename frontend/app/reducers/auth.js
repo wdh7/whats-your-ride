@@ -8,24 +8,35 @@ import {
   LOGOUT
 } from '../actions/auth';
 
+import {
+  UPDATE_PROFILE_START,
+  UPDATE_PROFILE_SUCCESS,
+  UPDATE_PROFILE_ERROR,
+  RESET_PROFILE_SUCCESS
+} from '../actions/profile';
+
 
 const initialState = {
   fetchInProgress: false,
   regSuccessMsg: '',
   regErrorMsg: '',
   authedUser: {},
-  authedErrorMsg: ''
+  authedErrorMsg: '',
+  updateSuccessMsg: '',
+  updateErrorMsg: ''
 }
 
 function authReducer(state = initialState, action) {
   switch (action.type) {
     case REGISTER_START:
     case LOGIN_START:
+    case UPDATE_PROFILE_START:
       return {
         ...state,
         fetchInProgress: true,
         regErrorMsg: '',
-        authedErrorMsg: ''
+        authedErrorMsg: '',
+        updateErrorMsg: ''
       }
     case REGISTER_SUCCESS:
       return {
@@ -56,7 +67,27 @@ function authReducer(state = initialState, action) {
       localStorage.removeItem('jwt');
       return {
         ...state,
-        authedUser: {}
+        authedUser: {},
+        regSuccessMsg: ''
+      }
+    case UPDATE_PROFILE_SUCCESS:
+      return {
+        ...state,
+        fetchInProgress: false,
+        authedUser: action.user,
+        updateSuccessMsg: action.success,
+        updateErrorMsg: ''
+      }
+    case UPDATE_PROFILE_ERROR:
+      return {
+        ...state,
+        fetchInProgress: false,
+        updateErrorMsg: action.error
+      }
+    case RESET_PROFILE_SUCCESS:
+      return {
+        ...state,
+        updateSuccessMsg: ''
       }
     default:
       return state;
