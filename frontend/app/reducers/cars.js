@@ -1,4 +1,11 @@
-import { FETCH_CARS_REQUEST, FETCH_CARS_SUCCESS, FETCH_CARS_ERROR } from '../actions/cars';
+import {
+  FETCH_CARS_REQUEST,
+  FETCH_CARS_SUCCESS,
+  FETCH_CARS_ERROR,
+  ADD_CAR_START,
+  ADD_CAR_SUCCESS,
+  ADD_CAR_ERROR
+} from '../actions/cars';
 
 
 const initialState = {
@@ -10,9 +17,11 @@ const initialState = {
 function carsReducer(state = initialState, action) {
   switch (action.type) {
     case FETCH_CARS_REQUEST:
+    case ADD_CAR_START:
       return {
         ...state,
-        isFetching: true
+        isFetching: true,
+        error: null
       }
     case FETCH_CARS_SUCCESS:
       return {
@@ -20,7 +29,14 @@ function carsReducer(state = initialState, action) {
         isFetching: false,
         cars: action.cars
       }
+    case ADD_CAR_SUCCESS:
+      return {
+        ...state,
+        isFetching: false,
+        cars: [...state.cars, action.car]
+      }
     case FETCH_CARS_ERROR:
+    case ADD_CAR_ERROR:
       return {
         ...state,
         isFetching: false,

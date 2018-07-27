@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import Loading from '../components/Loading';
 import Error from '../components/Error';
 import Cars from '../components/Cars';
+import CarModalContainer from './CarModalContainer';
 
 
 class HomeContainer extends Component {
@@ -28,6 +29,10 @@ class HomeContainer extends Component {
 
     return (
       <div className='content'>
+        {this.props.authedUser.jwt
+          ? <CarModalContainer />
+          : null
+        }
         <Cars cars={cars} />
       </div>
     )
@@ -36,6 +41,7 @@ class HomeContainer extends Component {
 
 function mapStateToProps(state) {
   return {
+    authedUser: state.auth.authedUser,
     cars: state.cars
   }
 }

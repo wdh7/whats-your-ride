@@ -18,6 +18,10 @@ ul {
   color: #2196F3;
 }
 
+.fa-plus {
+  margin-right: 0;
+}
+
 .active {
   font-weight: bold;
 }
@@ -148,4 +152,13 @@ img {
   box-sizing: border-box;
   padding-top: 30px;
   margin: auto;
+}
+
+.modal-icon {
+  text-align: right;
+  margin-bottom: 15px;
+}
+
+.modal-icon:hover {
+  cursor: pointer;
 }
