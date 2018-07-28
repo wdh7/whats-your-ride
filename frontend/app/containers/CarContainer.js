@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { getCarInfo } from '../actions/car';
+import { getCarInfo, deleteCar } from '../actions/car';
 import Loading from '../components/Loading';
 import Error from '../components/Error';
 import Car from '../components/Car';
@@ -22,6 +22,7 @@ class CarContainer extends Component {
 
   render() {
     const { isLoading, error, car, comments } = this.props.car;
+    const authedUser = this.props.authedUser;
 
     if (isLoading) {
       return <Loading />
@@ -34,7 +35,7 @@ class CarContainer extends Component {
     if (car.make && car.owner.username) {
       return (
         <div className='car-section'>
-          <Car car={car} />
+          <Car car={car} authedUser={authedUser} deleteCar={this.props.deleteCar} />
           <CommentsCounter comments={comments} />
           <Comments comments={comments} />
         </div>
@@ -47,14 +48,24 @@ class CarContainer extends Component {
 
 function mapStateToProps(state) {
   return {
-    car: state.car
+    car: state.car,
+    authedUser: state.auth.authedUser
   }
 }
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps(dispatch, ownProps) {
   return {
     getCarAndComments: (id) => {
       dispatch(getCarInfo(id));
+    },
+    deleteCar: (carId) => {
+      dispatch(deleteCar(carId))
+        .then(res => {
+          if (res.success) {
+            // If successfully deleted car, redirect user to main page
+            ownProps.history.push('/');
+          }
+        });
     }
   }
 }

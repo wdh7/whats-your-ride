@@ -1,7 +1,8 @@
 import {
   GET_CAR_AND_COMMENTS_START,
   GET_CAR_AND_COMMENTS_SUCCESS,
-  GET_CAR_AND_COMMENTS_ERROR
+  GET_CAR_AND_COMMENTS_ERROR,
+  DELETE_CAR_SUCCESS
 } from '../actions/car';
 
 
@@ -31,6 +32,12 @@ function carReducer(state = initialState, action) {
         ...state,
         isLoading: false,
         error: action.error
+      }
+    case DELETE_CAR_SUCCESS:
+      return {
+        ...state,
+        car: {},
+        comments: []
       }
     default:
       return state;

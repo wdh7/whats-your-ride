@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import User from './User';
+import { Button } from 'reactstrap';
 
-function Car({ car }) {
+function Car({ car, authedUser, deleteCar }) {
+  let isDisabled = authedUser.username === car.owner.username ? false : true;
+
   return (
     <div className='car-details'>
       <div className='car-img'>
@@ -18,12 +21,24 @@ function Car({ car }) {
 
         <User user={car.owner} />
       </div>
+
+      <div>
+        <Button
+          color='danger'
+          disabled={isDisabled}
+          onClick={() => deleteCar(car._id)}
+        >
+          Delete
+        </Button>
+      </div>
     </div>
   )
 }
 
 Car.propTypes = {
-  car: PropTypes.object.isRequired
+  car: PropTypes.object.isRequired,
+  authedUser: PropTypes.object.isRequired,
+  deleteCar: PropTypes.func.isRequired
 }
 
 
