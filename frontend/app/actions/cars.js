@@ -102,7 +102,6 @@ export function addNewCar(car) {
       })
       .then(({ car }) => {
         dispatch(addCarSuccess(car));
-        return { success: true }
       })
       .catch(error => dispatch(addCarError(error.message)))
   }

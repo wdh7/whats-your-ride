@@ -47,12 +47,7 @@ class CarModalContainer extends Component {
     const newState = {...this.state};
     delete newState.modal;
 
-    this.props.addCar(newState)
-      .then(res => {
-        if (res.success) {
-          console.log("success");
-        }
-      })
+    this.props.addCar(newState);
   }
 
   render() {

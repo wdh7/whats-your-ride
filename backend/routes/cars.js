@@ -26,6 +26,7 @@ router.param('id', (req, res, next, id) => {
 router.get('/', (req, res, next) => {
   // Find all cars and populate the owner field
   Car.find()
+    .sort({ updatedAt: 'desc' })
     .populate('owner')
     .exec((err, cars) => {
       if (err) { return res.sendStatus(500) }

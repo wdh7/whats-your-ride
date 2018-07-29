@@ -33,7 +33,7 @@ function carsReducer(state = initialState, action) {
       return {
         ...state,
         isFetching: false,
-        cars: [...state.cars, action.car]
+        cars: [action.car, ...state.cars]
       }
     case FETCH_CARS_ERROR:
     case ADD_CAR_ERROR:
