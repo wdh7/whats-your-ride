@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import User from './User';
+import TimeStamp from './TimeStamp';
 import { Button } from 'reactstrap';
 
 function Car({ car, authedUser, deleteCar }) {
@@ -17,7 +18,7 @@ function Car({ car, authedUser, deleteCar }) {
         <span><b>Model:</b> {car.model}</span>
         <span><b>Year:</b> {car.year}</span>
         <span><b>Description:</b> {car.description}</span>
-        <span className='last-updated'>Last Updated: {new Date(car.updatedAt).toDateString()}</span>
+        <TimeStamp label='Last Updated' time={car.updatedAt} />
 
         <User user={car.owner} />
       </div>

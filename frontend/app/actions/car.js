@@ -7,6 +7,10 @@ export const GET_CAR_AND_COMMENTS_ERROR = 'GET_CAR_AND_COMMENTS_ERROR';
 
 export const DELETE_CAR_SUCCESS = 'DELETE_CAR_SUCCESS';
 
+export const ADD_COMMENT_START = 'ADD_COMMENT_START';
+export const ADD_COMMENT_SUCCESS = 'ADD_COMMENT_SUCCESS';
+export const ADD_COMMENT_ERROR = 'ADD_COMMENT_ERROR';
+
 
 // ACTIONS CREATORS
 function getCarInfoStart() {
@@ -33,6 +37,26 @@ function getCarInfoError(error) {
 function deleteCarSuccess() {
   return {
     type: DELETE_CAR_SUCCESS
+  }
+}
+
+function addCommentStart() {
+  return {
+    type: ADD_COMMENT_START
+  }
+}
+
+function addCommentSuccess(comment) {
+  return {
+    type: ADD_COMMENT_SUCCESS,
+    comment
+  }
+}
+
+function addCommentError(error) {
+  return {
+    type: ADD_COMMENT_ERROR,
+    error
   }
 }
 
@@ -73,5 +97,35 @@ export function deleteCar(id) {
         dispatch(deleteCarSuccess());
         return { success: true};
       })
+  }
+}
+
+export function submitComment(comment, carId) {
+  const options = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem('jwt')}`
+    },
+    body: JSON.stringify({
+      comment: { text: comment }
+    })
+  }
+
+  return (dispatch) => {
+    dispatch(addCommentStart());
+
+    return fetch(`/api/cars/${carId}/comments`, options)
+      .then(res => {
+        if (!res.ok) {
+          throw new Error('Deleting car error');
+        }
+
+        return res.json();
+      })
+      .then(({ comment }) => {
+        dispatch(addCommentSuccess(comment));
+      })
+      .catch(error => dispatch(addCommentError(error.message)))
   }
 }

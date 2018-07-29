@@ -2,12 +2,15 @@ import {
   GET_CAR_AND_COMMENTS_START,
   GET_CAR_AND_COMMENTS_SUCCESS,
   GET_CAR_AND_COMMENTS_ERROR,
-  DELETE_CAR_SUCCESS
+  DELETE_CAR_SUCCESS,
+  ADD_COMMENT_START,
+  ADD_COMMENT_SUCCESS,
+  ADD_COMMENT_ERROR
 } from '../actions/car';
 
 
 const initialState = {
-  isLoading: false,
+  isFetching: false,
   error: null,
   car: {},
   comments: []
@@ -16,21 +19,23 @@ const initialState = {
 function carReducer(state = initialState, action) {
   switch (action.type) {
     case GET_CAR_AND_COMMENTS_START:
+    case ADD_COMMENT_START:
       return {
         ...state,
-        isLoading: true
+        isFetching: true
       }
     case GET_CAR_AND_COMMENTS_SUCCESS:
       return {
         ...state,
-        isLoading: false,
+        isFetching: false,
         car: action.car,
         comments: action.comments
       }
     case GET_CAR_AND_COMMENTS_ERROR:
+    case ADD_COMMENT_ERROR:
       return {
         ...state,
-        isLoading: false,
+        isFetching: false,
         error: action.error
       }
     case DELETE_CAR_SUCCESS:
@@ -38,6 +43,12 @@ function carReducer(state = initialState, action) {
         ...state,
         car: {},
         comments: []
+      }
+    case ADD_COMMENT_SUCCESS:
+      return {
+        ...state,
+        isFetching: false,
+        comments: [action.comment, ...state.comments]
       }
     default:
       return state;

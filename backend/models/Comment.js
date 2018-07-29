@@ -10,12 +10,14 @@ const CommentSchema = new Schema({
 }, { timestamps: true })
 
 // method to remove properties from author object
-CommentSchema.methods.editedJSON = function() {
+CommentSchema.methods.editedJSON = function(commentAuthor) {
+  const author = commentAuthor || this.author
   return {
     id: this._id,
     text: this.text,
     article: this.article,
-    author: this.author.publicJSON()
+    createdAt: this.createdAt,
+    author: author.publicJSON()
   }
 }
 

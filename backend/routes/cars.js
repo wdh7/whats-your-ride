@@ -132,8 +132,9 @@ router.post('/:id/comments', auth.verify, (req, res, next) => {
       // Add comment id to Car model and save
       req.car.comments.push(comment._id);
       req.car.save().then(() => {
-        // success
-        res.status(200).json({ message: 'Successfully created a comment' })
+        // Find the current user
+        User.findById(req.auth.id)
+          .then(user => res.status(200).json({ comment: comment.editedJSON(user) }))
       })
     })
     .catch(err => res.status(500).json({ message: 'Error saving comment' })) // error
@@ -144,6 +145,7 @@ router.get('/:id/comments', (req, res, next) => {
   // search db to find all comments for car
   Comment
     .find({ car: req.car._id })
+    .sort({ createdAt: 'desc'})
     .populate('author')
     .exec((err, populatedComments) => {
       // remove unnecessary properties from author field

@@ -123,7 +123,7 @@ img {
   cursor: pointer;
 }
 
-.last-updated {
+.timestamp {
   color: #0000004f;
   font-size: 0.6rem;
 }
@@ -134,6 +134,11 @@ img {
   box-sizing: border-box;
   padding: 5px;
   border-bottom: 2px solid #0000001f;
+}
+
+.comment-header {
+  display: flex;
+  flex-direction: column;
 }
 
 .comment-text {
@@ -159,6 +164,6 @@ img {
   margin-bottom: 15px;
 }
 
-.modal-icon:hover {
+.modal-icon:hover, .collapse-icon:hover {
   cursor: pointer;
 }

@@ -1,17 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import CommentFormContainer from '../containers/CommentFormContainer';
 
-function CommentsCounter({ comments }) {
+function CommentsHeader({ comments }) {
   return (
     <div className='comments-counter'>
       <p><b>{comments.length} Comments:</b></p>
+      <CommentFormContainer />
     </div>
   )
 }
 
-CommentsCounter.propTypes = {
+CommentsHeader.propTypes = {
   comments: PropTypes.arrayOf(PropTypes.object).isRequired
 }
 
 
-export default CommentsCounter;
+export default CommentsHeader;

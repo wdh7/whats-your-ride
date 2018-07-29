@@ -6,7 +6,7 @@ import Loading from '../components/Loading';
 import Error from '../components/Error';
 import Car from '../components/Car';
 import Comments from '../components/Comments';
-import CommentsCounter from '../components/CommentsCounter';
+import CommentsHeader from '../components/CommentsHeader';
 
 
 class CarContainer extends Component {
@@ -21,10 +21,10 @@ class CarContainer extends Component {
   }
 
   render() {
-    const { isLoading, error, car, comments } = this.props.car;
+    const { isFetching, error, car, comments } = this.props.car;
     const authedUser = this.props.authedUser;
 
-    if (isLoading) {
+    if (isFetching) {
       return <Loading />
     }
 
@@ -36,7 +36,7 @@ class CarContainer extends Component {
       return (
         <div className='car-section'>
           <Car car={car} authedUser={authedUser} deleteCar={this.props.deleteCar} />
-          <CommentsCounter comments={comments} />
+          <CommentsHeader comments={comments} />
           <Comments comments={comments} />
         </div>
       )
