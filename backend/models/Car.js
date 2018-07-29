@@ -22,6 +22,7 @@ CarSchema.methods.detailsJSON = function() {
     description: this.description,
     img: this.img,
     updatedAt: this.updatedAt,
+    createdAt: this.createdAt,
     owner: this.owner.publicJSON()
   }
 }

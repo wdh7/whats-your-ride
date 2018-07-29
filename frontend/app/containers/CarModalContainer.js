@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-import AddCarForm from '../components/AddCarForm';
+import CarForm from '../components/CarForm';
 import { addNewCar } from '../actions/cars';
+import { editCar } from '../actions/car';
+import { removeEmptyData } from '../helpers/removeEmptyData';
 
 class CarModalContainer extends Component {
   constructor(props) {
@@ -41,26 +43,32 @@ class CarModalContainer extends Component {
   }
 
   handleSubmit = (e) => {
+    const { editCar, addCar, label, carId } = this.props;
+
     e.preventDefault();
     this.close();
 
-    const newState = {...this.state};
+    let newState = {...this.state};
     delete newState.modal;
+    newState = removeEmptyData(newState);
 
-    this.props.addCar(newState);
+    if (label === 'Edit Car') {
+      editCar(newState, carId);
+    } else if (label === 'Create New Car') {
+      addCar(newState);
+    }
   }
 
   render() {
     return (
       <div>
-        <div className='modal-icon' onClick={this.toggle}>
-          <i className='fa fa-plus fa-fw'></i>
-          <span>Add New Car</span>
+        <div onClick={this.toggle}>
+          {this.props.children}
         </div>
         <Modal isOpen={this.state.modal} toggle={this.toggle}>
-          <ModalHeader toggle={this.toggle}>Create New Car</ModalHeader>
+          <ModalHeader toggle={this.toggle}>{this.props.label}</ModalHeader>
           <ModalBody>
-            <AddCarForm handleInput={this.handleInput} />
+            <CarForm handleInput={this.handleInput} />
           </ModalBody>
           <ModalFooter>
             <Button color="primary" onClick={this.handleSubmit}>Submit</Button>{' '}
@@ -72,12 +80,21 @@ class CarModalContainer extends Component {
   }
 }
 
+function mapStateToProps(state) {
+  return {
+    carId: state.car.car._id
+  }
+}
+
 function mapDispatchToProps(dispatch) {
   return {
     addCar: (car) => {
       return dispatch(addNewCar(car));
+    },
+    editCar: (data, carId) => {
+      dispatch(editCar(data, carId));
     }
   }
 }
 
-export default connect(null, mapDispatchToProps)(CarModalContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(CarModalContainer);

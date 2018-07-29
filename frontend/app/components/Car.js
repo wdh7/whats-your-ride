@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import User from './User';
 import TimeStamp from './TimeStamp';
-import { Button } from 'reactstrap';
+import CarActionButtons from './CarActionButtons';
 
 function Car({ car, authedUser, deleteCar }) {
   let isDisabled = authedUser.username === car.owner.username ? false : true;
@@ -23,15 +23,7 @@ function Car({ car, authedUser, deleteCar }) {
         <User user={car.owner} />
       </div>
 
-      <div>
-        <Button
-          color='danger'
-          disabled={isDisabled}
-          onClick={() => deleteCar(car._id)}
-        >
-          Delete
-        </Button>
-      </div>
+      <CarActionButtons isDisabled={isDisabled} deleteCar={deleteCar} carId={car._id} />
     </div>
   )
 }

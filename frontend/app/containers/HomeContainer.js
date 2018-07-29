@@ -5,6 +5,7 @@ import Loading from '../components/Loading';
 import Error from '../components/Error';
 import Cars from '../components/Cars';
 import CarModalContainer from './CarModalContainer';
+import NewCarIcon from '../components/NewCarIcon';
 
 
 class HomeContainer extends Component {
@@ -30,7 +31,9 @@ class HomeContainer extends Component {
     return (
       <div className='content'>
         {this.props.authedUser.jwt
-          ? <CarModalContainer />
+          ? <CarModalContainer label='Create New Car'>
+              <NewCarIcon />
+            </CarModalContainer>
           : null
         }
         <Cars cars={cars} />

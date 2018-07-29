@@ -11,6 +11,10 @@ export const ADD_COMMENT_START = 'ADD_COMMENT_START';
 export const ADD_COMMENT_SUCCESS = 'ADD_COMMENT_SUCCESS';
 export const ADD_COMMENT_ERROR = 'ADD_COMMENT_ERROR';
 
+export const EDIT_CAR_START = 'EDIT_CAR_START';
+export const EDIT_CAR_SUCCESS = 'EDIT_CAR_SUCCESS';
+export const EDIT_CAR_ERROR = 'EDIT_CAR_ERROR';
+
 
 // ACTIONS CREATORS
 function getCarInfoStart() {
@@ -59,6 +63,27 @@ function addCommentError(error) {
     error
   }
 }
+
+function editCarStart() {
+  return {
+    type: EDIT_CAR_START
+  }
+}
+
+function editCarSuccess(car) {
+  return {
+    type: EDIT_CAR_SUCCESS,
+    car
+  }
+}
+
+function editCarError(error) {
+  return {
+    type: EDIT_CAR_ERROR,
+    error
+  }
+}
+
 
 // REDUX THUNK ACTION CREATOR
 export function getCarInfo(id) {
@@ -127,5 +152,33 @@ export function submitComment(comment, carId) {
         dispatch(addCommentSuccess(comment));
       })
       .catch(error => dispatch(addCommentError(error.message)))
+  }
+}
+
+export function editCar(data, carId) {
+  const options = {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem('jwt')}`
+    },
+    body: JSON.stringify({ car: data })
+  }
+
+  return (dispatch) => {
+    dispatch(editCarStart());
+
+    fetch(`/api/cars/${carId}`, options)
+      .then(res => {
+        if (!res.ok) {
+          throw new Error(`${res.status} - ${res.statusText}`);
+        }
+
+        return res.json();
+      })
+      .then(({ car }) => {
+        dispatch(editCarSuccess(car));
+      })
+      .catch(error => dispatch(editCarError(error.message)))
   }
 }

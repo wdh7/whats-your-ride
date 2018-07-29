@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 
-function AddCarForm({ handleInput }) {
+function CarForm({ handleInput }) {
   return (
     <Form>
       <FormGroup>
@@ -29,8 +29,8 @@ function AddCarForm({ handleInput }) {
   )
 }
 
-AddCarForm.propTypes = {
+CarForm.propTypes = {
   handleInput: PropTypes.func.isRequired
 }
 
-export default AddCarForm;
+export default CarForm;

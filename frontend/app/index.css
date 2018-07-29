@@ -22,6 +22,10 @@ ul {
   margin-right: 0;
 }
 
+.space {
+  margin-right: 5px;
+}
+
 .active {
   font-weight: bold;
 }
@@ -93,11 +97,15 @@ img {
 }
 
 .car-info {
-  width: 50%;
+  width: 40%;
 }
 
 .car-info span {
   display: block;
+}
+
+.car-actions {
+  display: flex;
 }
 
 .owner-section {
