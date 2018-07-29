@@ -40,7 +40,10 @@ class CommentFormContainer extends Component {
           </span>
         </div>
         <Collapse isOpen={this.state.collapse}>
-          <CommentForm handleSubmit={this.handleSubmit} handleInput={this.handleInput} />
+          <CommentForm
+            handleSubmit={this.handleSubmit}
+            handleInput={this.handleInput}
+            isDisabled={this.props.isDisabled} />
         </Collapse>
       </section>
     );
@@ -49,7 +52,8 @@ class CommentFormContainer extends Component {
 
 function mapStateToProps(state) {
   return {
-    carId: state.car.car._id
+    carId: state.car.car._id,
+    isDisabled: !state.auth.authedUser.username
   }
 }
 
