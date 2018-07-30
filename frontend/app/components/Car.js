@@ -6,12 +6,16 @@ import CarActionButtons from './CarActionButtons';
 
 function Car({ car, authedUser, deleteCar }) {
   let isDisabled = authedUser.username === car.owner.username ? false : true;
+  const imgStyles = {
+    backgroundImage: `url(${car.img})`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat'
+  }
 
   return (
     <div className='car-details'>
-      <div className='car-img'>
-        <img src={car.img} alt={`${car.make} ${car.model} Image`} />
-      </div>
+      <div className='car-img' style={imgStyles}></div>
 
       <div className='car-info'>
         <span><b>Make:</b> {car.make}</span>
@@ -19,7 +23,6 @@ function Car({ car, authedUser, deleteCar }) {
         <span><b>Year:</b> {car.year}</span>
         <span><b>Description:</b> {car.description}</span>
         <TimeStamp label='Last Updated' time={car.updatedAt} />
-
         <User user={car.owner} />
       </div>
 
