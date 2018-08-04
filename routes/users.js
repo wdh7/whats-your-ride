@@ -26,7 +26,8 @@ router.post('/', (req, res, next) => {
     username,
     location,
     tagline,
-    img: img || 'http://www.placepuppy.net/1p/400/250' // use placeholder image if no profile img provided
+    // use placeholder image if no profile img provided
+    img: img || `https://ui-avatars.com/api/?name=${username}&length=1`
   });
 
   // convert plain text password to hash

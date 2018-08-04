@@ -48,7 +48,8 @@ router.post('/', auth.verify, (req, res, next) => {
     model,
     year,
     description,
-    img: img || 'https://loremflickr.com/320/240/car', // use car img placeholder if no car img provided
+    // use img placeholder if no car img provided
+    img: img || 'https://dummyimage.com/600x400/dddddd/ffffff&text=No+Image',
     owner: req.auth.id
   })
 
