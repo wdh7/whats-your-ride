@@ -1,7 +1,8 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const webpack = require('webpack');
 
-module.exports = {
+let config = {
   entry: ['babel-polyfill', 'whatwg-fetch', './app/index.js'],
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -19,7 +20,7 @@ module.exports = {
       template: './app/index.html'
     })
   ],
-  mode: 'development',
+  mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
   devServer: {
     historyApiFallback: true,
     proxy: {
@@ -30,3 +31,11 @@ module.exports = {
     }
   }
 }
+
+if (process.env.NODE_ENV === 'production') {
+  config.plugins.push(
+    new webpack.optimize.UglifyJsPlugin()
+  )
+}
+
+module.exports = config;
