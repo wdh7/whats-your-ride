@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Comment from './comment';
+import Comment from './Comment';
 
 function Comments({ comments }) {
   return (
