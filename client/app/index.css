@@ -11,11 +11,20 @@ ul {
   padding-left: 0;
 }
 
+input {
+  width: 100%;
+}
+
+.error-msg {
+  font-size: 0.7rem;
+  color: red;
+}
+
 .fa {
   margin-right: 12px;
   font-weight: bold;
   font-size: 1.3rem;
-  color: #2196F3;
+  color: #2196f3;
 }
 
 .fa-plus {
@@ -121,19 +130,22 @@ img {
   margin-top: 15px;
 }
 
-.owner-stamp, .comment-author {
+.owner-stamp,
+.comment-author {
   display: flex;
   align-items: center;
 }
 
-.owner-img, .comment-img-wrapper {
+.owner-img,
+.comment-img-wrapper {
   width: 50px;
   height: 50px;
   border-radius: 50%;
   margin-right: 5px;
 }
 
-.owner-img:hover, .comment-img-wrapper:hover {
+.owner-img:hover,
+.comment-img-wrapper:hover {
   cursor: pointer;
 }
 
@@ -167,7 +179,8 @@ img {
   margin-top: 5px;
 }
 
-.profile-wrapper, .login-wrapper {
+.profile-wrapper,
+.login-wrapper {
   width: 40%;
   box-sizing: border-box;
   padding-top: 30px;
@@ -179,6 +192,7 @@ img {
   margin-bottom: 15px;
 }
 
-.modal-icon:hover, .collapse-icon:hover {
+.modal-icon:hover,
+.collapse-icon:hover {
   cursor: pointer;
 }

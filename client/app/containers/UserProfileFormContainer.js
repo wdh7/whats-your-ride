@@ -1,119 +1,119 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
-// Form for both user registration and profile update
-import UserProfileForm from '../components/UserProfileForm';
-
-// Registration
-import { register } from '../actions/auth';
+import * as Yup from 'yup';
+import { Form, Field, withFormik } from 'formik';
 import { resetForm } from '../helpers/resetForm';
-
-// Edit Profile
-import { removeEmptyData } from '../helpers/removeEmptyData';
-import { updateUserProfile, resetProfileSuccess } from '../actions/profile';
-
+import { Button, FormGroup, Label } from 'reactstrap';
+import ShowAlert from '../components/ShowAlert';
+import { register } from '../actions/auth';
+import { resetProfileSuccess } from '../actions/profile';
 
 class UserProfileFormContainer extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      username: '',
-      password: '',
-      location: '',
-      tagline: '',
-      img: ''
-    }
-  }
-
-  // update state with user input from the form
-  handleChange = (e) => {
-    this.setState({
-      [e.target.name]: e.target.value
-    })
-  }
-
-  // Submit user form data to the backend.
-  // If successful in registering, redirect to '/login' path
-  handleRegSubmit = (e) => {
-    e.preventDefault();
-    // reset the form fields
-    e.target.reset();
-
-    this.props.register(this.state)
-      .then(res => {
-        if (res.redirect) {
-          // Success block: redirect to login page
-          this.props.history.push('/login');
-        } else {
-          // Error block: reset component state so user can re-enter registration info
-          resetForm.call(this, this.state);
-        }
-      })
-  }
-
-  // Submit updated profile info to backend.
-  handleProfileSubmit = (e) => {
-    e.preventDefault();
-    e.target.reset();
-
-    const currentUser = this.props.auth.authedUser.username;
-    const filteredData = removeEmptyData(this.state);
-
-    this.props.updateProfile(filteredData, currentUser);
-  }
+  state = {
+    username: '',
+    password: '',
+    location: '',
+    tagline: '',
+    img: '',
+  };
 
   componentWillUnmount() {
-    // Remove update profile success message when user
-    // navigates to a different path
     this.props.resetProfileSuccess();
   }
-
 
   render() {
     const { regErrorMsg, updateSuccessMsg, updateErrorMsg } = this.props.auth;
     const path = this.props.location.pathname;
+    const { errors, touched } = this.props;
 
-    if (path === '/register') {
-      return <UserProfileForm
-                handleChange={this.handleChange}
-                handleSubmit={this.handleRegSubmit}
-                regErrorMsg={regErrorMsg}
-                formType='Registration'
-              />
-    }
+    return (
+      <div className='profile-wrapper'>
+        {regErrorMsg ? <ShowAlert color='danger' text={regErrorMsg} /> : null}
 
-    if (path === '/profile') {
-      return <UserProfileForm
-                handleChange={this.handleChange}
-                handleSubmit={this.handleProfileSubmit}
-                updateSuccessMsg={updateSuccessMsg}
-                updateErrorMsg={updateErrorMsg}
-                formType='Edit Profile'
-              />
-    }
+        {updateSuccessMsg ? <ShowAlert color='success' text={updateSuccessMsg} /> : null}
+
+        {updateErrorMsg ? <ShowAlert color='danger' text={updateErrorMsg} /> : null}
+
+        <h3>Register</h3>
+        <Form>
+          <FormGroup>
+            <Label for='username'>Username *</Label>
+            <Field id='username' name='username' />
+            {errors.username && touched.username && <p className='error-msg'>{errors.username}</p>}
+          </FormGroup>
+          <FormGroup>
+            <Label for='password'>Password *</Label>
+            <Field id='password' name='password' type='password' />
+            {errors.password && touched.password && <p className='error-msg'>{errors.password}</p>}
+          </FormGroup>
+          <FormGroup>
+            <Label for='location'>Location *</Label>
+            <Field id='location' name='location' />
+            {errors.location && touched.location && <p className='error-msg'>{errors.location}</p>}
+          </FormGroup>
+          <FormGroup>
+            <Label for='tagline'>Tagline</Label>
+            <Field id='tagline' name='tagline' />
+            {errors.tagline && touched.tagline && <p className='error-msg'>{errors.tagline}</p>}
+          </FormGroup>
+          <FormGroup>
+            <Label for='img'>Image Link</Label>
+            <Field id='img' name='img' />
+            {errors.img && touched.img && <p className='error-msg'>{errors.img}</p>}
+          </FormGroup>
+          <Button type='submit' color='primary'>
+            Submit
+          </Button>
+        </Form>
+      </div>
+    );
   }
 }
 
-
 function mapStateToProps(state) {
   return {
-    auth: state.auth
-  }
+    auth: state.auth,
+  };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    register: (formData) => {
-      return dispatch(register(formData));
-    },
-    updateProfile: (data, currentUserName) => {
-      dispatch(updateUserProfile(data, currentUserName));
-    },
-    resetProfileSuccess: () => {
-      dispatch(resetProfileSuccess());
-    }
-  }
+    register: (formData) => dispatch(register(formData)),
+    resetProfileSuccess: () => dispatch(resetProfileSuccess()),
+  };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(UserProfileFormContainer);
+const UserProfileSchema = Yup.object().shape({
+  username: Yup.string()
+    .min(3, 'Minimum of 3 characters')
+    .required('Username is required'),
+  password: Yup.string()
+    .min(3, 'Must be at least 3 characters')
+    .matches(
+      /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{3,}$/,
+      'Password must include at least one character and one number'
+    )
+    .required('Password is required'),
+  location: Yup.string().required('Location is required'),
+  tagline: Yup.string(),
+  img: Yup.string(),
+});
+
+const UserProfileFormik = withFormik({
+  mapPropsToValues: () => ({ username: '', password: '', location: '', tagline: '', img: '' }),
+  validationSchema: UserProfileSchema,
+  handleSubmit: (values, { props }) => {
+    props.register(values).then((res) => {
+      if (res.redirect) {
+        props.history.push('/login');
+      } else {
+        resetForm.call(this, this.state);
+      }
+    });
+  },
+})(UserProfileFormContainer);
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(UserProfileFormik);

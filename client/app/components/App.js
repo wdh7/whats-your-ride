@@ -5,8 +5,8 @@ import NavBar from './NavBar';
 import HomeContainer from '../containers/HomeContainer';
 import CarContainer from '../containers/CarContainer';
 import UserProfileFormContainer from '../containers/UserProfileFormContainer';
+import UpdateProfileContainer from '../containers/UpdateProfileContainer';
 import LoginFormContainer from '../containers/LoginFormContainer';
-
 
 class App extends Component {
   render() {
@@ -19,15 +19,14 @@ class App extends Component {
             <Route exact path='/' component={HomeContainer} />
             <Route path='/register' component={UserProfileFormContainer} />
             <Route path='/login' component={LoginFormContainer} />
-            <Route path='/profile' component={UserProfileFormContainer} />
+            <Route path='/profile' component={UpdateProfileContainer} />
             <Route path='/cars/:id' component={CarContainer} />
             <Route render={() => <h1>Not Found</h1>} />
           </Switch>
         </div>
       </Router>
-    )
+    );
   }
 }
-
 
 export default App;
